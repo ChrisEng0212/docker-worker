@@ -1,0 +1,25 @@
+
+services:
+  worker:
+    build:
+      context: .
+    image: vostok33/worker-example
+    container_name: bbws_worker
+    env_file: .env
+    ports:
+      - 8000:8000
+    depends_on:
+      - redis
+  redis:
+    image: redis
+    container_name: rMaster
+    command: bash -c "redis-server --appendonly yes --requirepass password"
+    env_file: .env
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data:/data
+
+
+
+
