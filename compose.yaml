@@ -13,8 +13,10 @@ services:
   redis:
     image: redis
     container_name: rMaster
-    command: bash -c "redis-server --appendonly yes --requirepass password"
     env_file: .env
+    environment:
+      - REDIS_PASS=${REDIS_PASS}
+    command: bash -c "redis-server --appendonly yes --requirepass ${REDIS_PASS}"
     ports:
       - "6379:6379"
     volumes:
