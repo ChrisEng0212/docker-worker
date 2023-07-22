@@ -3,7 +3,7 @@ services:
   worker:
     build:
       context: .
-    image: vostok33/docker-orderflow
+    image: vostok33/orderflow
     container_name: bbws_worker
     env_file: .env
     ports:

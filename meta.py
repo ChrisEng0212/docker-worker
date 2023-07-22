@@ -3,6 +3,8 @@ import redis
 from pybit import inverse_perpetual, usdt_perpetual
 import os
 
+print('RUN META')
+
 try:
     import config
     API_KEY = config.API_KEY
@@ -32,5 +34,5 @@ session = inverse_perpetual.HTTP(
     api_secret=API_SECRET
 )
 
-print('REDIS', r)
-print('API', session)
+print('REDIS', r, REDIS_IP, REDIS_PASS)
+print('API', session, str(session.get_wallet_balance()['result']['BTC']['equity']))

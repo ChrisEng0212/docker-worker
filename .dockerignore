@@ -31,6 +31,10 @@
 **/secrets.dev.yaml
 **/values.dev.yaml
 LICENSE
+
+### personal files
 docker-command.json
 rTest.py
+config.py
 README.md
+.env
