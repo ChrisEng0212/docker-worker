@@ -1,4 +1,4 @@
-import os, json, math
+import os, json, math, time
 from math import trunc
 from time import sleep
 import datetime as dt
@@ -1433,6 +1433,17 @@ def handle_trade_message(msg):
 
 
 def runStream():
+    ## delay start until time ready
+    block = True
+    while block:
+        t = dt.datetime.today()
+        print(t.minute, t.minute%5)
+        if t.minute%5 == 0:
+            ## multiple of 5 mins
+            block = False
+        else:
+            time.sleep(5)
+
 
     print('RUN_STREAM')    # rK = json.loads(r.keys())
 
@@ -1496,7 +1507,7 @@ def runStream():
     # )
 
 
-    #startDiscord()
+    startDiscord()
 
     while True:
         sleep(0.1)
@@ -1504,9 +1515,12 @@ def runStream():
     return print('Task Closed')
 
 
-if LOCAL:
-    print('RUN STREAM')
-    runStream()
+
+runStream()
+
+
+
+
 
 
 

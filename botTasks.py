@@ -4,23 +4,13 @@ import discord
 from discord.ext import tasks, commands
 from discord import SyncWebhook
 from datetime import datetime
-from meta import r, session
-
-try:
-    import config
-    DISCORD_CHANNEL = config.DISCORD_CHANNEL
-    DISCORD_TOKEN = config.DISCORD_TOKEN
-    DISCORD_USER = config.DISCORD_USER
-    DISCORD_WEBHOOK = config.DISCORD_WEBHOOK
-except Exception as e:
-    print('GET DISCORD ENV', e)
-    DISCORD_CHANNEL = os.getenv('DISCORD_CHANNEL')
-    DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
-    DISCORD_USER = os.getenv('DISCORD_USER')
-    DISCORD_WEBHOOK = os.getenv('DISCORD_WEBHOOK')
+from meta import r, session, AUX_ACTIVE, DISCORD_CHANNEL, DISCORD_TOKEN, DISCORD_USER, DISCORD_WEBHOOK
 
 
 def startDiscord():
+    if int(AUX_ACTIVE) != 1:
+        return False
+
     ## intents controls what the bot can do; in this case read message content
     intents = discord.Intents.default()
     intents.message_content = True
@@ -112,6 +102,7 @@ def startDiscord():
                 webhook.send("check")
             except Exception as e:
                 print('DISCORD WEBHOOK EXCEPION ' + e)
+
         elif 'elta purge' in msg.content:
             coin = 'BTC'
             dFlow = 'deltaflow_' + coin
@@ -241,6 +232,7 @@ def monitorLimits():
                 result = session.cancel_all_active_orders(symbol="BTCUSD")['ret_msg']
                 print('CANCEL', result)
                 break
+
 def placeOrder(side, price, stop_loss, qty, take_profit):
 
     order = session.place_active_order(

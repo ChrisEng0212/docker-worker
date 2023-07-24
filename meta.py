@@ -11,6 +11,11 @@ try:
     API_SECRET = config.API_SECRET
     REDIS_PASS = config.REDIS_PASS
     REDIS_IP = config.REDIS_IP
+    DISCORD_CHANNEL = config.DISCORD_CHANNEL
+    DISCORD_TOKEN = config.DISCORD_TOKEN
+    DISCORD_USER = config.DISCORD_USER
+    DISCORD_WEBHOOK = config.DISCORD_WEBHOOK
+    AUX_ACTIVE = config.AUX_ACTIVE
     LOCAL = True
 except Exception as e:
     print('GET ENV', e)
@@ -18,6 +23,11 @@ except Exception as e:
     API_SECRET = os.getenv('API_SECRET')
     REDIS_PASS = os.getenv('REDIS_PASS')
     REDIS_IP = os.getenv('REDIS_IP')
+    DISCORD_CHANNEL = os.getenv('DISCORD_CHANNEL')
+    DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+    DISCORD_USER = os.getenv('DISCORD_USER')
+    DISCORD_WEBHOOK = os.getenv('DISCORD_WEBHOOK')
+    AUX_ACTIVE = os.getenv('AUX_ACTIVE')
     LOCAL = False
 
 

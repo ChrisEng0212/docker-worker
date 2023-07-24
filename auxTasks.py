@@ -1,7 +1,8 @@
 
 import json
 from datetime import datetime
-from meta import r, session, LOCAL
+from meta import r, session, LOCAL, AUX_ACTIVE, DISCORD_WEBHOOK
+from discord import SyncWebhook
 
 
 def sendMessage(coin, string, bg, text):
@@ -238,6 +239,8 @@ def getSwitchMessage(SIDE, ACTIVE, THD, PD, BT, CTD, FC):
 
 
 def actionDELTA(blocks, newCandle, coin, coinDict, lastCandleisBlock):
+    if int(AUX_ACTIVE) != 1:
+        return False
 
     deltaControl = coinDict[coin]['deltaswitch']
 
@@ -248,7 +251,12 @@ def actionDELTA(blocks, newCandle, coin, coinDict, lastCandleisBlock):
     if deltaControl['Sell']['price'] > 0 and blocks[-1]['high'] > deltaControl['Sell']['price'] and deltaControl['Sell']['swing'] == False:
         deltaControl['Sell']['swing'] = True
         deltaControl['Buy']['swing'] = False
+
+        ## remove cuurent orders
+        r.set('monitor', 'on')
+
         print('DELTA SELL SWING TRUE')
+
         r.set('coinDict', json.dumps(coinDict))
         return 'SW'
 
@@ -391,6 +399,8 @@ def actionDELTA(blocks, newCandle, coin, coinDict, lastCandleisBlock):
 
 
 def actionVOLUME(blocks, coin, coinDict, bullDiv, bearDiv):
+    if int(AUX_ACTIVE) != 1:
+        return False
 
     volumeControl = coinDict[coin]['volswitch']
     # print('volume control', volumeControl)
